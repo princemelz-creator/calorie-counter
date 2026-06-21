@@ -2,7 +2,7 @@
 
 BiteBalance is a client-side calorie counter app built with HTML5, Tailwind CSS, and vanilla ES6+ JavaScript. It features an entry logging workflow, data persistence via `localStorage`, item management capabilities, and simulated database lookups powered by the `Fetch API`.
 
-## 🚀 Key Features
+##  Key Features
 
 - **Dynamic Calorie Logging:** Add customized items and instantly track daily metric accumulations.
 - **LocalStorage Persistence:** Retains user metrics and configurations automatically across browser tabs and system reloads.
