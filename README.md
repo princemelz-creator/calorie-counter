@@ -1,4 +1,4 @@
-# 🍏 BiteBalance - Daily Calorie Tracker
+#  BiteBalance - Daily Calorie Tracker
 
 BiteBalance is a client-side calorie counter app built with HTML5, Tailwind CSS, and vanilla ES6+ JavaScript. It features an entry logging workflow, data persistence via `localStorage`, item management capabilities, and simulated database lookups powered by the `Fetch API`.
 
@@ -10,7 +10,7 @@ BiteBalance is a client-side calorie counter app built with HTML5, Tailwind CSS,
 - **Async Database Ingestion Engine:** Simulates remote lookups with placeholder API queries using `async/await` to auto-fill meal data.
 - **Responsive Layout:** Adaptive cross-platform styling handled using utility classes from Tailwind CSS.
 
-## 📁 Repository File Structure
+##  Repository File Structure
 
 ```text
 ├── index.html     # Application page layout and structural configuration
