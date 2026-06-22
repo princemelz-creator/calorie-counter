@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Tally — Calorie Counter</title>
+  <meta name="description" content="A simple, persistent daily calorie counter." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="page">
+
+    <header class="header">
+      <div class="header__eyebrow">TODAY'S LEDGER</div>
+      <h1 class="header__title">Daily Tally</h1>
+    </header>
+
+    <main class="layout">
+
+      <section class="panel panel--form" aria-labelledby="addFoodHeading">
+        <h2 id="addFoodHeading" class="panel__title">Log a food</h2>
+
+        <form id="foodForm" class="food-form" novalidate>
+          <div class="field">
+            <label for="foodName">Food</label>
+            <input
+              type="text"
+              id="foodName"
+              name="foodName"
+              placeholder="e.g. Grilled chicken sandwich"
+              autocomplete="off"
+              required
+            />
+            <ul id="suggestions" class="suggestions" hidden></ul>
+          </div>
+
+          <div class="field">
+            <label for="foodCalories">Calories</label>
+            <input
+              type="number"
+              id="foodCalories"
+              name="foodCalories"
+              placeholder="e.g. 450"
+              min="0"
+              step="1"
+              required
+            />
+          </div>
+
+          <div class="field-row">
+            <button type="submit" class="btn btn--primary">
+              Add to tally
+            </button>
+            <button type="button" id="lookupBtn" class="btn btn--ghost">
+              Look up calories
+            </button>
+          </div>
+
+          <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
+        </form>
+
+        <div class="field goal-field">
+          <label for="goalInput">Daily goal (optional)</label>
+          <input
+            type="number"
+            id="goalInput"
+            placeholder="e.g. 2000"
+            min="0"
+            step="1"
+          />
+        </div>
+      </section>
+
+      <section class="panel panel--receipt" aria-labelledby="receiptHeading">
+        <div class="receipt">
+          <div class="receipt__top-edge" aria-hidden="true"></div>
+
+          <div class="receipt__body">
+            <h2 id="receiptHeading" class="receipt__store">DAILY TALLY</h2>
+            <p class="receipt__meta" id="receiptDate">—</p>
+            <div class="receipt__rule"></div>
+
+            <ul id="foodList" class="receipt__list" aria-live="polite">
+            </ul>
+
+            <p id="emptyState" class="empty-state">
+              No items yet. Log your first food to start today's tally.
+            </p>
+
+            <div class="receipt__rule"></div>
+
+            <div class="receipt__total-row">
+              <span class="receipt__total-label">TOTAL</span>
+              <span id="totalCalories" class="receipt__total-value">0</span>
+            </div>
+
+            <div class="receipt__goal-row" id="goalRow" hidden>
+              <span class="receipt__goal-label">Goal</span>
+              <span id="goalValue" class="receipt__goal-value">—</span>
+            </div>
+
+            <div class="progress-track" id="progressTrack" hidden>
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p class="receipt__remaining" id="remainingText" hidden></p>
+          </div>
+
+          <div class="receipt__bottom-edge" aria-hidden="true"></div>
+        </div>
+
+        <button type="button" id="resetBtn" class="btn btn--reset">
+          Reset day
+        </button>
+      </section>
+
+    </main>
+
+    <footer class="footer">
+      <p>Stored locally in your browser. Nothing leaves your device.</p>
+    </footer>
+
+  </div>
+
+  <dialog id="resetDialog" class="reset-dialog">
+    <h3>Start a new day?</h3>
+    <p>This clears every item from today's tally. This can't be undone.</p>
+    <div class="reset-dialog__actions">
+      <button type="button" id="cancelReset" class="btn btn--ghost">Cancel</button>
+      <button type="button" id="confirmReset" class="btn btn--danger">Reset day</button>
+    </div>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
