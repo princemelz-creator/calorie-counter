@@ -1,37 +1,33 @@
 :root {
-  /* --- Color tokens --- */
   --paper: #FFF8F0;
   --paper-raised: #FFFCF7;
   --ink: #2B2420;
   --ink-soft: #6B5F54;
-  --accent: #D6663C;       /* paprika — primary actions */
+  --accent: #D6663C;      
   --accent-dark: #B6502A;
-  --sage: #7A9B76;         /* under goal */
-  --rust: #C44545;         /* over goal */
+  --sage: #7A9B76;        
+  --rust: #C44545;       
   --line: #E8DFCF;
   --line-strong: #D8CBB4;
   --shadow-color: rgba(43, 36, 32, 0.12);
-
-  /* --- Type --- */
   --font-display: "Fraunces", serif;
   --font-body: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
-
   --radius-sm: 6px;
   --radius-md: 10px;
 }
-
 * {
   box-sizing: border-box;
 }
 
-html, body {
+ body {
   margin: 0;
   padding: 0;
 }
 
 body {
   background: var(--paper);
+  background-color: peachpuff;
   background-image:
     radial-gradient(circle at 1px 1px, rgba(43,36,32,0.045) 1px, transparent 0);
   background-size: 22px 22px;
@@ -40,10 +36,6 @@ body {
   line-height: 1.5;
   min-height: 100vh;
 }
-
-/* ==========================================================================
-   Layout
-   ========================================================================== */
 
 .page {
   max-width: 920px;
@@ -65,15 +57,11 @@ body {
   }
 }
 
-/* ==========================================================================
-   Header
-   ========================================================================== */
-
 .header {
   text-align: left;
 }
 
-.header__eyebrow {
+.header__eyebrow {  
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 700;
@@ -95,9 +83,6 @@ body {
   margin: 0;
 }
 
-/* ==========================================================================
-   Panels
-   ========================================================================== */
 
 .panel {
   background: var(--paper-raised);
@@ -127,10 +112,6 @@ body {
   align-items: center;
   gap: 16px;
 }
-
-/* ==========================================================================
-   Form
-   ========================================================================== */
 
 .food-form {
   display: flex;
@@ -179,7 +160,6 @@ body {
   border-top: 1px dashed var(--line-strong);
 }
 
-/* Autocomplete suggestions */
 .suggestions {
   position: absolute;
   top: calc(100% + 2px);
@@ -218,9 +198,6 @@ body {
   font-size: 13px;
 }
 
-/* ==========================================================================
-   Buttons
-   ========================================================================== */
 
 .btn {
   font-family: var(--font-body);
@@ -292,10 +269,6 @@ body {
 .form-status.is-error {
   color: var(--rust);
 }
-
-/* ==========================================================================
-   Receipt
-   ========================================================================== */
 
 .receipt {
   width: 100%;
@@ -476,10 +449,6 @@ body {
   margin: 10px 0 0;
 }
 
-/* ==========================================================================
-   Reset dialog
-   ========================================================================== */
-
 .reset-dialog {
   border: none;
   border-radius: var(--radius-md);
@@ -514,9 +483,6 @@ body {
   gap: 10px;
 }
 
-/* ==========================================================================
-   Footer
-   ========================================================================== */
 
 .footer {
   text-align: center;
@@ -525,9 +491,6 @@ body {
   color: var(--ink-soft);
 }
 
-/* ==========================================================================
-   Accessibility
-   ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
   * {
