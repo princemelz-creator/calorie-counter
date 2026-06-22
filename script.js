@@ -1,11 +1,5 @@
-/**
- * BiteBalance Calorie Counter - Core Application Script
- * Orchestrates DOM mutation, localized tracking persistence, and data fetching actions.
- */
-
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- DOM Elements Reference Mapping ---
     const calorieForm = document.getElementById('calorie-form');
     const foodNameInput = document.getElementById('food-name');
     const calorieInput = document.getElementById('calorie-amount');
@@ -15,30 +9,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const itemCountBadge = document.getElementById('item-count');
     const resetDayButton = document.getElementById('reset-day-btn');
     
-    // API Feature References
     const apiSearchInput = document.getElementById('api-search-input');
     const apiSearchButton = document.getElementById('api-search-btn');
     const apiStatusMessage = document.getElementById('api-status-msg');
 
-    // --- State Initialization ---
-    // Extract baseline collection array tracking records from LocalStorage data pools
     let loggedFoods = JSON.parse(localStorage.getItem('biteBalance_meals')) || [];
 
-    /**
-     * Updates LocalStorage, recalculates the total calories, 
-     * and refreshes the user interface to reflect changes.
-     */
     function updateApplicationState() {
-        // Persist food data using localStorage
         localStorage.setItem('biteBalance_meals', JSON.stringify(loggedFoods));
         
         renderFoodList();
         calculateTotalCalories();
     }
 
-    /**
-     * Iterates through the logged foods list to generate and output HTML list elements.
-     */
     function renderFoodList() {
         foodListContainer.innerHTML = '';
         
@@ -53,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         foodListContainer.classList.remove('hidden');
         itemCountBadge.textContent = `${loggedFoods.length} ${loggedFoods.length === 1 ? 'Item' : 'Items'}`;
 
-        // Construct individual entry items
+
         loggedFoods.forEach(food => {
             const listItem = document.createElement('li');
             listItem.className = "flex justify-between items-center bg-slate-50 border border-slate-100 hover:border-slate-200 px-4 py-3 rounded-xl transition group shadow-sm";
@@ -75,19 +58,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /**
-     * Loops through tracking structures computing accumulated metric indices.
-     */
+    
     function calculateTotalCalories() {
         const aggregatedCalories = loggedFoods.reduce((total, item) => total + item.calories, 0);
         
-        // Dynamic Counter Animation
         animateValue(totalCaloriesDisplay, parseInt(totalCaloriesDisplay.textContent) || 0, aggregatedCalories, 400);
     }
 
-    /**
-     * Helper to animate calculation increments dynamically for better presentation flow.
-     */
+    
     function animateValue(obj, start, end, duration) {
         if (start === end) return;
         let startTimestamp = null;
@@ -104,9 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.requestAnimationFrame(step);
     }
 
-    /**
-     * Form entry handling function to submit clean, structured entries into active runtime arrays.
-     */
     calorieForm.addEventListener('submit', (e) => {
         e.preventDefault();
         
@@ -124,20 +99,16 @@ document.addEventListener('DOMContentLoaded', () => {
         loggedFoods.push(newFoodItem);
         updateApplicationState();
 
-        // Reset tracking forms
         calorieForm.reset();
         foodNameInput.focus();
     });
 
-    /**
-     * Event delegation block target capturing clicks on the dynamic element collection wrapper list.
-     */
     foodListContainer.addEventListener('click', (e) => {
         if (e.target.classList.contains('delete-btn')) {
             const chosenRow = e.target.closest('li');
             const targetedId = chosenRow.getAttribute('data-id');
 
-            // Apply a transition animation before removing the item from the array
+        
             chosenRow.style.opacity = '0';
             chosenRow.style.transform = 'scale(0.95)';
             
@@ -148,9 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    /**
-     * Clears storage spaces completely to reset layout indicators instantly.
-     */
+   
     resetDayButton.addEventListener('click', () => {
         if (loggedFoods.length === 0) return;
         
@@ -160,23 +129,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Simulated Fetch API Engine Section ---
-    /**
-     * Simulates querying a remote food database using the Fetch API.
-     */
+  
     async function simulateDatabaseApiFetch(searchQuery) {
         apiStatusMessage.textContent = "Connecting to cloud data pool...";
         apiStatusMessage.className = "text-xs text-indigo-400 mt-3 h-4 italic";
         
-        // Connect to placeholder JSON API engines mimicking live network delay pipelines
         try {
             const response = await fetch(`https://jsonplaceholder.typicode.com/posts/1`);
             if (!response.ok) throw new Error("Network latency failed check parameters.");
             
-            // Artificial delay to simulate processing time
             await new Promise(resolve => setTimeout(resolve, 800));
 
-            // Static local mock database dictionary for lookups
+        
             const localMockDatabase = {
                 'avocado': 240,
                 'apple': 95,
@@ -194,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (localMockDatabase.hasOwnProperty(cleanQuery)) {
                 const foundCalories = localMockDatabase[cleanQuery];
                 
-                // Populate the entry form fields automatically
+        
                 foodNameInput.value = cleanQuery;
                 calorieInput.value = foundCalories;
                 
@@ -212,9 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    /**
-     * Triggers the simulation process using search keys.
-     */
+   
     apiSearchButton.addEventListener('click', () => {
         const query = apiSearchInput.value.trim();
         if (!query) {
@@ -225,9 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
         simulateDatabaseApiFetch(query);
     });
 
-    /**
-     * Sanitization utility helper to safeguard innerHTML parsing components from XSS attacks.
-     */
+   
     function escapeHtml(textStr) {
         const characterMap = {
             '&': '&amp;',
@@ -239,6 +199,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return textStr.replace(/[&<>"']/g, function(m) { return characterMap[m]; });
     }
 
-    // --- Initial View Paint execution loop ---
+
     updateApplicationState();
 });
