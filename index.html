@@ -1,136 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Daily Tally — Calorie Counter</title>
-  <meta name="description" content="A simple, persistent daily calorie counter." />
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiteBalance - Daily Calorie Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between">
 
-  <div class="page">
-
-    <header class="header">
-      <div class="header__eyebrow">TODAY'S LEDGER</div>
-      <h1 class="header__title">Daily Tally</h1>
+    <header class="bg-indigo-600 text-white shadow-md">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold tracking-tight flex items-center gap-2">
+                 BiteBalance
+            </h1>
+            <span class="text-sm bg-indigo-700 px-3 py-1 rounded-full font-medium">Daily Tracker</span>
+        </div>
     </header>
 
-    <main class="layout">
+    <main class="max-w-4xl w-full mx-auto px-4 py-8 flex-grow">
+        
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col justify-between">
+                <div>
+                    <h2 class="text-sm font-semibold text-slate-400 uppercase tracking-wider">Total Consumed</h2>
+                    <p class="text-5xl font-black text-indigo-600 mt-2" id="total-calories">0</p>
+                </div>
+                <p class="text-xs text-slate-400 mt-4">Calories logged during the current window.</p>
+            </div>
 
-      <section class="panel panel--form" aria-labelledby="addFoodHeading">
-        <h2 id="addFoodHeading" class="panel__title">Log a food</h2>
+            <div class="bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl shadow-sm text-white flex flex-col justify-between">
+                <div>
+                    <h3 class="font-bold text-lg mb-1">Quick Database Search</h3>
+                    <p class="text-slate-400 text-xs mb-4">Simulate fetching verified food data instantly from an API endpoint.</p>
+                    <div class="flex gap-2">
+                        <input type="text" id="api-search-input" placeholder="e.g., Avocado, Pizza..." class="w-full bg-slate-700 border-none rounded-xl px-4 py-2 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <button id="api-search-btn" class="bg-indigo-500 hover:bg-indigo-600 transition px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap">Fetch Specs</button>
+                    </div>
+                </div>
+                <p id="api-status-msg" class="text-xs text-indigo-300 mt-3 h-4 italic"></p>
+            </div>
+        </section>
 
-        <form id="foodForm" class="food-form" novalidate>
-          <div class="field">
-            <label for="foodName">Food</label>
-            <input
-              type="text"
-              id="foodName"
-              name="foodName"
-              placeholder="e.g. Grilled chicken sandwich"
-              autocomplete="off"
-              required
-            />
-            <ul id="suggestions" class="suggestions" hidden></ul>
-          </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <section class="lg:col-span-1">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 sticky top-6">
+                    <h3 class="font-bold text-lg text-slate-800 mb-4">Log Food Item</h3>
+                    <form id="calorie-form" class="space-y-4">
+                        <div>
+                            <label for="food-name" class="block text-xs font-semibold text-slate-500 uppercase mb-1">Item Name</label>
+                            <input type="text" id="food-name" placeholder="Banana, Oats, Chicken..." required class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label for="calorie-amount" class="block text-xs font-semibold text-slate-500 uppercase mb-1">Calories (kcal)</label>
+                            <input type="number" id="calorie-amount" min="1" placeholder="350" required class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        </div>
+                        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl shadow-sm transition text-sm flex justify-center items-center gap-2">
+                             Add To Journal
+                        </button>
+                    </form>
+                </div>
+            </section>
 
-          <div class="field">
-            <label for="foodCalories">Calories</label>
-            <input
-              type="number"
-              id="foodCalories"
-              name="foodCalories"
-              placeholder="e.g. 450"
-              min="0"
-              step="1"
-              required
-            />
-          </div>
+            <section class="lg:col-span-2 flex flex-col justify-between">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 min-h-[350px] flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center border-b border-slate-100 pb-4 mb-4">
+                            <h3 class="font-bold text-lg text-slate-800">Meal Log</h3>
+                            <span id="item-count" class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-md font-bold">0 Items</span>
+                        </div>
+                        
+                        <div id="empty-state" class="text-center py-12 text-slate-400">
+                            <p class="text-sm">No food items tracked for today yet.</p>
+                        </div>
 
-          <div class="field-row">
-            <button type="submit" class="btn btn--primary">
-              Add to tally
-            </button>
-            <button type="button" id="lookupBtn" class="btn btn--ghost">
-              Look up calories
-            </button>
-          </div>
+                        <ul id="food-list" class="space-y-3 hidden"></ul>
+                    </div>
 
-          <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
-        </form>
-
-        <div class="field goal-field">
-          <label for="goalInput">Daily goal (optional)</label>
-          <input
-            type="number"
-            id="goalInput"
-            placeholder="e.g. 2000"
-            min="0"
-            step="1"
-          />
+                    <div class="border-t border-slate-100 pt-4 mt-6 flex justify-end">
+                        <button id="reset-day-btn" class="text-xs font-semibold text-red-500 hover:bg-red-50 px-3 py-2 rounded-xl transition flex items-center gap-1.5">
+                            🔄 Clear Day Data
+                        </button>
+                    </div>
+                </div>
+            </section>
         </div>
-      </section>
-
-      <section class="panel panel--receipt" aria-labelledby="receiptHeading">
-        <div class="receipt">
-          <div class="receipt__top-edge" aria-hidden="true"></div>
-
-          <div class="receipt__body">
-            <h2 id="receiptHeading" class="receipt__store">DAILY TALLY</h2>
-            <p class="receipt__meta" id="receiptDate">—</p>
-            <div class="receipt__rule"></div>
-
-            <ul id="foodList" class="receipt__list" aria-live="polite">
-            </ul>
-
-            <p id="emptyState" class="empty-state">
-              No items yet. Log your first food to start today's tally.
-            </p>
-
-            <div class="receipt__rule"></div>
-
-            <div class="receipt__total-row">
-              <span class="receipt__total-label">TOTAL</span>
-              <span id="totalCalories" class="receipt__total-value">0</span>
-            </div>
-
-            <div class="receipt__goal-row" id="goalRow" hidden>
-              <span class="receipt__goal-label">Goal</span>
-              <span id="goalValue" class="receipt__goal-value">—</span>
-            </div>
-
-            <div class="progress-track" id="progressTrack" hidden>
-              <div class="progress-fill" id="progressFill"></div>
-            </div>
-            <p class="receipt__remaining" id="remainingText" hidden></p>
-          </div>
-
-          <div class="receipt__bottom-edge" aria-hidden="true"></div>
-        </div>
-
-        <button type="button" id="resetBtn" class="btn btn--reset">
-          Reset day
-        </button>
-      </section>
-
     </main>
 
-    <footer class="footer">
-      <p>Stored locally in your browser. Nothing leaves your device.</p>
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400">
+        <p>&copy; 2026 BiteBalance Counter App. Built with Vanilla JS and Tailwind CSS.</p>
     </footer>
 
-  </div>
-
-  <dialog id="resetDialog" class="reset-dialog">
-    <h3>Start a new day?</h3>
-    <p>This clears every item from today's tally. This can't be undone.</p>
-    <div class="reset-dialog__actions">
-      <button type="button" id="cancelReset" class="btn btn--ghost">Cancel</button>
-      <button type="button" id="confirmReset" class="btn btn--danger">Reset day</button>
-    </div>
-  </dialog>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
